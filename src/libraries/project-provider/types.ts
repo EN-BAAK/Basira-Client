@@ -1,3 +1,5 @@
+import { User } from "@/types/models";
+
 export type Variant = "default" | "secondary" | "destructive" | "outline" | "main";
 
 export type ToastMessage = {
@@ -30,6 +32,8 @@ export type WarningProps = {
 export type AppContextProps = {
   pushToast: (toastMessage: ToastMessage) => void;
   showWarning: (warning: Warning) => void;
+  isLoggedIn: boolean;
+  user: User
 }
 
 export type AppProviderProps = {

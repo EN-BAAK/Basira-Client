@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Cairo, IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
+import ReactQueryProvider from "@/libraries/react-query/ReactQueryProvidder";
+import AppProvider from "@/libraries/project-provider/AppProvider";
 
 const cairo = Cairo({
   variable: "--font-cairo",
@@ -22,11 +24,7 @@ export const metadata: Metadata = {
     "منصة ذكية لتحليل البيانات المالية وتقديم رؤى وتوصيات لتحسين المبيعات واتخاذ القرارات.",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children, }: Readonly<{ children: React.ReactNode; }>) {
   return (
     <html
       lang="ar"
@@ -34,7 +32,11 @@ export default function RootLayout({
       className={`${cairo.variable} ${ibmPlexArabic.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-text font-sans">
-        {children}
+        <ReactQueryProvider>
+          <AppProvider>
+            {children}
+          </AppProvider>
+        </ReactQueryProvider>
       </body>
     </html>
   );

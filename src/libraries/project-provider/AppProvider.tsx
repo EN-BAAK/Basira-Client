@@ -3,6 +3,8 @@
 import React, { createContext, useContext, useState } from "react";
 import { AppContextProps, AppProviderProps, ToastMessage, Warning as WarningProps } from "./types";
 import Toast from "./Toast";
+import { useValidateAuthentication } from "@/features/useAuth";
+import { initialUser } from "@/constants/global";
 import Warning from "./Warning";
 
 const AppContext = createContext<AppContextProps | undefined>(undefined);
@@ -10,6 +12,8 @@ const AppContext = createContext<AppContextProps | undefined>(undefined);
 export const AppProvider = ({ children }: AppProviderProps): React.JSX.Element => {
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
   const [warning, setWarning] = useState<WarningProps | undefined>(undefined);
+
+  const { isError, data } = useValidateAuthentication();
 
   const pushToast = (toastMessage: ToastMessage) => {
     setToasts((prev) => [...prev, toastMessage]);
@@ -22,8 +26,10 @@ export const AppProvider = ({ children }: AppProviderProps): React.JSX.Element =
   return (
     <AppContext.Provider
       value={{
+        isLoggedIn: !isError,
         pushToast,
         showWarning: (warningProps) => setWarning(warningProps),
+        user: data?.data || initialUser
       }}
     >
       <div className="fixed left-0 z-50">

@@ -4,7 +4,7 @@ import React from "react"
 import { cn } from "@/lib/utils"
 import { CustomButtonProps } from "../types"
 
-const CustomButton: React.FC<CustomButtonProps> = ({
+const Button: React.FC<CustomButtonProps> = ({
   label,
   className = "",
   variant = "primary",
@@ -16,7 +16,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
 }) => {
   const variantClasses = {
     primary:
-      "bg-primary text-background hover:opacity-90",
+      "bg-primary text-white hover:opacity-90",
 
     "primary-outline":
       "border border-primary bg-transparent text-primary hover:bg-primary/10",
@@ -28,25 +28,25 @@ const CustomButton: React.FC<CustomButtonProps> = ({
       "border border-accent bg-transparent text-accent hover:bg-accent/10",
 
     danger:
-      "bg-danger text-background hover:opacity-90",
+      "bg-danger text-white hover:opacity-90",
 
     "danger-outline":
       "border border-danger bg-transparent text-danger hover:bg-danger/10",
 
     success:
-      "bg-success text-background hover:opacity-90",
+      "bg-success text-white hover:opacity-90",
 
     "success-outline":
       "border border-success bg-transparent text-success hover:bg-success/10",
 
     warning:
-      "bg-warning text-background hover:opacity-90",
+      "bg-warning text-white hover:opacity-90",
 
     "warning-outline":
       "border border-warning bg-transparent text-warning hover:bg-warning/10",
 
     info:
-      "bg-info text-background hover:opacity-90",
+      "bg-info text-white hover:opacity-90",
 
     "info-outline":
       "border border-info bg-transparent text-info hover:bg-info/10",
@@ -55,19 +55,25 @@ const CustomButton: React.FC<CustomButtonProps> = ({
       "bg-transparent text-text hover:opacity-75",
 
     "transparent-outline":
-      "border border-muted bg-transparent text-text hover:bg-muted/20",
+      "border border-border bg-transparent text-text hover:bg-border/40",
 
-    "primary-gradient":
-      "bg-gradient-to-r from-primary to-success text-background hover:opacity-90",
+    "transparent-primary":
+      "bg-transparent text-text hover:text-primary",
 
-    "primary-gradient-outline":
-      "border border-primary bg-transparent text-primary hover:bg-primary/10",
+    "transparent-accent":
+      "bg-transparent text-text hover:text-accent",
 
-    "accent-gradient":
-      "bg-gradient-to-r from-accent to-warning text-text hover:opacity-90",
+    "transparent-danger":
+      "bg-transparent text-text hover:text-danger",
 
-    "accent-gradient-outline":
-      "border border-accent bg-transparent text-accent hover:bg-accent/10",
+    "transparent-success":
+      "bg-transparent text-text hover:text-success",
+
+    "transparent-warning":
+      "bg-transparent text-text hover:text-warning",
+
+    "transparent-info":
+      "bg-transparent text-text hover:text-info",
   }[variant]
 
   return (
@@ -76,7 +82,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
       type={type}
       onClick={onClick}
       className={cn(
-        "w-full px-3 py-2 flex items-center justify-center gap-2 rounded-xl transition duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed",
+        "w-full px-3 py-2 flex items-center justify-center gap-2 rounded-xl transition-colors duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed",
         variantClasses,
         className
       )}
@@ -87,4 +93,4 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   )
 }
 
-export default CustomButton
+export default Button

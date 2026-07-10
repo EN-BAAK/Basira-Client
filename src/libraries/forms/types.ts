@@ -20,10 +20,12 @@ export type Variant =
   | "info-outline"
   | "transparent"
   | "transparent-outline"
-  | "primary-gradient"
-  | "primary-gradient-outline"
-  | "accent-gradient"
-  | "accent-gradient-outline"
+  | "transparent-primary"
+  | "transparent-accent"
+  | "transparent-danger"
+  | "transparent-success"
+  | "transparent-warning"
+  | "transparent-info"
 
 type Input = "text" | "color" | "number" | "password" | "email";
 

@@ -1,0 +1,76 @@
+import { CommonParentProps } from "./global"
+import { BrandEntity, CategoryEntity, ColorEntity, ProductEntity, SizeEntity } from "./models"
+
+export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
+  variant?: "text" | "rectangular" | "circular" | "pattern"
+}
+
+export type DashboardColorsRowProps = {
+  color: ColorEntity,
+  onDelete: () => void,
+  onEdit: () => void
+  isDeleting: boolean
+}
+
+export interface DashboardEmptyContentProps {
+  title: string;
+  desc: string;
+  buttonTitle?: string,
+  buttonAction?: () => void
+}
+
+export interface DashboardErrorContentProps {
+  title: string;
+  desc: string;
+  actionTitle?: string;
+  onAction?: () => void;
+}
+
+export type DashboardContentProps = {
+  isLoading: boolean,
+  isEmpty: boolean
+  emptyTitle: string,
+  emptyDesc: string,
+  emptyActionTitle?: string,
+  emptyAction?: () => void,
+  isError: boolean,
+  errorTitle: string,
+  errorDesc: string,
+  errorActionTitle?: string,
+  errorAction?: () => void,
+  Skeletons: React.ReactNode
+} & CommonParentProps
+
+
+export type SystemPatternProps = {
+  id: string; color?: string; opacity?: number;
+}
+
+export type DashboardSizesRowProps = {
+  size: SizeEntity,
+  onDelete: () => void,
+  onEdit: () => void
+  isDeleting: boolean
+}
+
+export interface DashboardCategoryCardProps {
+  category: CategoryEntity;
+  onDelete: () => void;
+  isDeleting: boolean;
+  onEdit: () => void;
+}
+
+export interface DashboardBrandCardProps {
+  brand: BrandEntity;
+  onDelete: () => void;
+  isDeleting: boolean;
+  onEdit: () => void;
+}
+
+export interface DashboardProductCardProps {
+  product: ProductEntity;
+  onDelete: () => void;
+  isDeleting: boolean;
+  onEdit: () => void;
+  onView: () => void
+}
