@@ -19,7 +19,7 @@ const Product: React.FC<DashboardProductCardProps> = ({ product, onDelete, isDel
             fill
             src={getImageUrl(product.imgUrl)}
             alt={product.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
             loading="lazy"
           />
         ) : (

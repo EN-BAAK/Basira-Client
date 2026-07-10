@@ -97,7 +97,7 @@ const ProductsPage: React.FC = () => {
         isLoading={isLoading}
       >
         <div ref={containerRef} className="flex-1 overflow-y-auto px-1">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 max-h-[calc(100vh-185px)]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-col-4 gap-5 max-h-[calc(100vh-185px)]">
             {products.map((productItem: ProductEntity) => (
               <Product
                 key={`product-${productItem.id}`}
