@@ -70,16 +70,16 @@ const ProductsPage: React.FC = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="ابحث عن اسم قطعة، كود، أو خامة معينة..."
-            className="h-10 w-full rounded-lg border border-background2 bg-card pl-3 pr-10 text-sm outline-none transition focus:border-accent font-sans text-text placeholder:text-text/40"
+            className="h-10 w-full pl-3 pr-8 text-xs"
           />
-          <Search className="w-4 h-4 text-text/40 absolute top-3 right-3" />
+          <Search className="w-4 h-4 text-text/40 absolute top-3.5 right-3" />
         </div>
 
         <CustomButton
           label="إضافة منتج جديد"
           icon={Plus}
           className="w-fit rounded-md "
-          iconClassName="w-4 h-4 text-accent"
+          iconClassName="w-4 h-4 text-reversed"
           onClick={goToAdd}
         />
       </div>
@@ -97,7 +97,7 @@ const ProductsPage: React.FC = () => {
         isLoading={isLoading}
       >
         <div ref={containerRef} className="flex-1 overflow-y-auto px-1">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-col-4 gap-5 max-h-[calc(100vh-185px)]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 2xl:grid-cols-4 gap-5 max-h-[calc(100vh-185px)]">
             {products.map((productItem: ProductEntity) => (
               <Product
                 key={`product-${productItem.id}`}

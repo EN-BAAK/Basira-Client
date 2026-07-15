@@ -23,46 +23,60 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({
   if (isSubmitting) buttonLabel = submittingLabel
   else if (disabled) buttonLabel = disabledLabel
 
-  const variantClasses: Record<Variant, string> = {
-    primary: "bg-primary text-reversed hover:bg-primary/90",
+const variantClasses: Record<Variant, string> = {
+    primary: "bg-primary text-white hover:opacity-90",
+    
     "primary-outline":
-      "border border-primary text-primary hover:bg-primary hover:text-reversed",
+      "border border-primary bg-transparent text-primary hover:bg-primary/10",
 
-    accent: "bg-accent text-reversed hover:bg-accent/90",
+    accent: "bg-accent text-text hover:opacity-90",
+    
     "accent-outline":
-      "border border-accent text-accent hover:bg-accent hover:text-reversed",
+      "border border-accent bg-transparent text-accent hover:bg-accent/10",
 
-    success: "bg-green-600 text-reversed hover:bg-green-500",
+    success: "bg-success text-white hover:opacity-90",
+    
     "success-outline":
-      "border border-green-600 text-green-600 hover:bg-green-600 hover:text-reversed",
+      "border border-success bg-transparent text-success hover:bg-success/10",
 
-    danger: "bg-danger text-reversed hover:bg-danger/90",
+    danger: "bg-danger text-white hover:opacity-90",
+    
     "danger-outline":
-      "border border-danger text-danger hover:bg-danger hover:text-reversed",
+      "border border-danger bg-transparent text-danger hover:bg-danger/10",
 
-    warning: "bg-warning text-reversed hover:bg-warning/90",
+    warning: "bg-warning text-white hover:opacity-90",
+    
     "warning-outline":
-      "border border-warning text-warning hover:bg-warning hover:text-reversed",
+      "border border-warning bg-transparent text-warning hover:bg-warning/10",
 
-    info: "bg-info text-reversed hover:bg-info/90",
+    info: "bg-info text-white hover:opacity-90",
+    
     "info-outline":
-      "border bg-info text-info hover:bg-info hover:text-reversed",
+      "border border-info bg-transparent text-info hover:bg-info/10",
 
-    transparent: "bg-transparent text-foreground hover:text-foreground/70",
+    // المتغيرات الشفافة والجديدة
+    transparent: "bg-transparent text-text hover:opacity-75",
+    
     "transparent-outline":
-      "border border-foreground/40 text-reversed hover:border-foreground hover:text-reversed",
+      "border border-border bg-transparent text-text hover:bg-border/40",
 
-    "primary-gradient":
-      "bg-gradient-to-r from-primary to-green-600 text-reversed hover:opacity-90",
+    "transparent-primary":
+      "bg-transparent text-text hover:text-primary",
 
-    "primary-gradient-outline":
-      "border border-primary text-primary hover:bg-gradient-to-r hover:from-primary hover:to-green-600 hover:text-reversed",
+    "transparent-accent":
+      "bg-transparent text-text hover:text-accent",
 
-    "accent-gradient":
-      "bg-gradient-to-r from-accent to-red-600 text-reversed hover:opacity-90",
+    "transparent-danger":
+      "bg-transparent text-text hover:text-danger",
 
-    "accent-gradient-outline":
-      "border border-accent text-accent hover:bg-gradient-to-r hover:from-accent hover:to-red-600 hover:text-reversed",
+    "transparent-success":
+      "bg-transparent text-text hover:text-success",
+
+    "transparent-warning":
+      "bg-transparent text-text hover:text-warning",
+
+    "transparent-info":
+      "bg-transparent text-text hover:text-info",
   }
 
   return (

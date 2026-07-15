@@ -1,5 +1,5 @@
-import { CommonParentProps } from "./global"
-import { BrandEntity, CategoryEntity, ColorEntity, ProductEntity, SizeEntity } from "./models"
+import { CommonParentProps, ID } from "./global"
+import { BrandEntity, CategoryEntity, ColorEntity, ProductEntity, ProductVariantEntity, SizeEntity } from "./models"
 
 export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: "text" | "rectangular" | "circular" | "pattern"
@@ -73,4 +73,36 @@ export interface DashboardProductCardProps {
   isDeleting: boolean;
   onEdit: () => void;
   onView: () => void
+}
+
+export type FormatTextProps = {
+  text: string
+}
+
+export type DashboardProductDetailsProps = {
+  product: ProductEntity
+}
+
+export type DashboardVariantRowProps = {
+  variant: ProductVariantEntity;
+  onDelete: (variantId: ID) => void;
+  onEdit: (id: ID, quantity: number) => void
+  colorName?: string;
+  sizeName?: string;
+  isPending: boolean,
+}
+
+export interface DashboardProductVariantsProps {
+  productId: ID;
+  colors: ColorEntity[];
+  sizes: SizeEntity[]
+}
+
+export interface DashboardVariantModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  colors: ColorEntity[];
+  sizes: SizeEntity[]
+  productId: ID;
+  variants: ProductVariantEntity[]
 }

@@ -1,3 +1,6 @@
+import { ID } from "./global"
+import { ProductVariantEntity } from "./models"
+
 export type LoginProps = {
   email: string,
   password: string
@@ -25,4 +28,20 @@ export interface AdminProductsQueryParams {
   page: number;
   offsetUnit: number;
   search?: string;
+}
+
+interface VariantOption {
+  key: ID;
+  value: string;
+}
+
+export interface VariantSelectorFieldProps {
+  sizeFieldName: string;
+  colorFieldName: string;
+  label?: string;
+  existingVariants: ProductVariantEntity[],
+  colors: VariantOption[];
+  sizes: VariantOption[];
+  styles?: string;
+  labelStyle?: string;
 }

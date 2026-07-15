@@ -59,3 +59,16 @@ export type ProductEntityCreation = Omit<ProductEntity, "id" | "category" | "bra
   colors: SelectedItemState[];
   sizes: SelectedItemState[];
 };
+
+export type ProductVariantEntity = {
+  id: ID,
+  productId: ID,
+  color?: ColorEntity,
+  size?: SizeEntity,
+  quantity: number
+}
+
+export type ProductVariantEntityCreation = Omit<ProductVariantEntity, "id" | "color" | "size"> & {
+  colorId?: ID,
+  sizeId?: ID
+}

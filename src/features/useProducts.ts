@@ -4,7 +4,7 @@ import { createProductSettings, deleteProductByIdSettings, getAllProductsSetting
 import { useOffsetContext } from "@/libraries/offset/OffsetsProvider";
 import { useAppContext } from "@/libraries/project-provider/AppProvider";
 import { UpdateOffsetUnitProcess } from "@/libraries/offset/types";
-import { APIResponse } from "@/libraries/react-query/types";
+import { APIResponse, InfinityResponse } from "@/libraries/react-query/types";
 import { ProductEntity } from "@/types/models";
 import { ID } from "@/types/global";
 
@@ -12,10 +12,10 @@ const adminBaseKey = "products-settings";
 
 export const useGetAllProductsSettings = (limit: number, search?: string) => {
   const { getOffsetUnit } = useOffsetContext();
-  const offsetUnit = getOffsetUnit([adminBaseKey, ""]);
+  const offsetUnit = getOffsetUnit([adminBaseKey, search || ""]);
 
   return useInfiniteQuery({
-    queryKey: [adminBaseKey, { search }],
+    queryKey: [adminBaseKey, search],
     queryFn: ({ pageParam = 1 }) =>
       getAllProductsSettings({ limit, page: pageParam, offsetUnit, search }),
     initialPageParam: 1,
@@ -44,10 +44,30 @@ export const useCreateProductSettings = () => {
 
   return useMutation({
     mutationFn: createProductSettings,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [adminBaseKey] });
+    onSuccess: (data: APIResponse<ProductEntity>) => {
+      const newProduct = data.data;
 
-      updateOffsetUnit([adminBaseKey, ""], UpdateOffsetUnitProcess.UP);
+      queryClient.setQueriesData<InfinityResponse<ProductEntity>>({ queryKey: [adminBaseKey, ""] }, (oldData) => {
+        if (!oldData) return oldData;
+
+        return {
+          ...oldData,
+          pages: oldData.pages.map((page, index) =>
+            index === 0
+              ? {
+                ...page,
+                data: {
+                  ...page.data,
+                  items: [newProduct, ...page.data.items],
+                },
+              }
+              : page
+          ),
+        };
+      }
+      );
+
+      updateOffsetUnit([adminBaseKey], UpdateOffsetUnitProcess.UP);
       pushToast({ message: "تم إضافة المنتج بنجاح", type: "SUCCESS" });
       router.push(`/dashboard/products`);
     },
@@ -67,8 +87,27 @@ export const useUpdateProductSettings = () => {
     onSuccess: (data: APIResponse<ProductEntity>) => {
       const updatedProduct = data.data;
 
+      queryClient.setQueriesData<InfinityResponse<ProductEntity>>({ queryKey: [adminBaseKey, ""] }, (oldData) => {
+        if (!oldData) return oldData;
+        console.log("oldData", oldData)
+        return {
+          ...oldData,
+          pages: oldData.pages.map((page) => ({
+            ...page,
+            data: {
+              ...page.data,
+              items: page.data.items.map((product) =>
+                product.id === updatedProduct.id
+                  ? updatedProduct
+                  : product
+              ),
+            },
+          })),
+        };
+      }
+      );
+
       queryClient.setQueryData([adminBaseKey, updatedProduct.id], data);
-      queryClient.invalidateQueries({ queryKey: [adminBaseKey] });
 
       pushToast({ message: "تم تحديث المنتج بنجاح", type: "SUCCESS" });
       router.push(`/dashboard/products`);
@@ -87,7 +126,27 @@ export const useDeleteProductByIdSettings = () => {
   return useMutation({
     mutationFn: deleteProductByIdSettings,
     onSuccess: (data: APIResponse<ProductEntity>) => {
-      const deletedProduct = data?.data;
+      const deletedProduct = data.data;
+
+      queryClient.setQueriesData<InfinityResponse<ProductEntity>>(
+        { queryKey: [adminBaseKey, ""] },
+        (oldData) => {
+          if (!oldData) return oldData;
+
+          return {
+            ...oldData,
+            pages: oldData.pages.map((page) => ({
+              ...page,
+              data: {
+                ...page.data,
+                items: page.data.items.filter(
+                  (product) => product.id !== deletedProduct.id
+                ),
+              },
+            })),
+          };
+        }
+      );
 
       queryClient.removeQueries({ queryKey: [adminBaseKey, deletedProduct.id] });
       queryClient.invalidateQueries({ queryKey: [adminBaseKey] });

@@ -1,5 +1,5 @@
 import { ForgotPasswordProps, LoginProps, ResetForgottenPasswordProps } from "@/types/forms";
-import { BrandEntityCreation, CategoryEntityCreation, ColorEntityCreation, ProductEntityCreation, SizeEntityCreation } from "@/types/models";
+import { BrandEntityCreation, CategoryEntityCreation, ColorEntityCreation, ProductEntityCreation, ProductVariantEntityCreation, SizeEntityCreation } from "@/types/models";
 
 export const loginInItalValues: LoginProps = {
   email: "",
@@ -42,3 +42,8 @@ export const initialProductCreationValues: ProductEntityCreation = {
   colors: [],
   sizes: [],
 };
+
+export const initialVariantCreationValue: ProductVariantEntityCreation = {
+    quantity: 1,
+    productId: "",
+}

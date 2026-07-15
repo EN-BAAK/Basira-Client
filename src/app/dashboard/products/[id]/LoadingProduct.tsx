@@ -3,7 +3,7 @@
 import { Skeleton } from "@/components/Skeleton";
 import React from "react";
 
-export default function Loading() {
+const LoadingProductDetails: React.FC = () => {
   return (
     <div className="space-y-6 w-full h-full animate-pulse p-1">
       <div className="flex justify-between items-center border-b border-background2 pb-5">
@@ -47,3 +47,5 @@ export default function Loading() {
     </div>
   );
 }
+
+export default LoadingProductDetails

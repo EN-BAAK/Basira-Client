@@ -86,3 +86,29 @@ export const validationProductModifySchema = Yup.object({
     })
   ),
 });
+
+export const variantValidationSchema =
+  Yup.object().shape({
+    colorId: Yup.string().test(
+      "at-least-one",
+      "يجب اختيار اللون أو المقاس على الأقل لتحديد المتغير",
+      function (value) {
+        const { sizeId } = this.parent;
+        return !!value || !!sizeId;
+      }
+    ),
+
+    sizeId: Yup.string().test(
+      "at-least-one",
+      "يجب اختيار اللون أو المقاس على الأقل لتحديد المتغير",
+      function (value) {
+        const { colorId } = this.parent;
+        return !!value || !!colorId;
+      }
+    ),
+
+    quantity: Yup.number()
+      .typeError("يجب إدخال كمية صحيحة كأرقام")
+      .min(0, "الكمية المتوفرة لا يمكن أن تكون أقل من 0")
+      .required("يرجى إدخال الكمية المتوفرة بالمستودع"),
+  });

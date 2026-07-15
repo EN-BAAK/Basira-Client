@@ -7,12 +7,14 @@ import { ChevronLeft, ChevronRight, Settings2, Sparkles, X } from "lucide-react"
 import { cn } from "@/lib/utils";
 import { navItems } from "@/constants/global";
 import Button from "@/libraries/forms/components/Button";
+import { useAppContext } from "@/libraries/project-provider/AppProvider";
 
-const Sidebar: React.FC = ({
-}) => {
+const Sidebar: React.FC = () => {
+  const pathname = usePathname();
+  const { user } = useAppContext()
+
   const [isOpenMobile, setIsOpenMobile] = useState<boolean>(false)
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false);
-  const pathname = usePathname();
 
   const closeMobileSidebar = () => setIsOpenMobile(false);
   const openMobileSidebar = () => setIsOpenMobile(true);
@@ -34,7 +36,7 @@ const Sidebar: React.FC = ({
       {isOpenMobile && (
         <div
           onClick={closeMobileSidebar}
-          className="fixed inset-0 z-[1000] bg-slate-900/40 backdrop-blur-sm lg:hidden animate-in fade-in duration-300"
+          className="fixed inset-0 z-[1000] bg-muted/40 backdrop-blur-sm lg:hidden animate-in fade-in duration-300"
         />
       )}
 
@@ -111,7 +113,7 @@ const Sidebar: React.FC = ({
                   "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 text-right",
                   active
                     ? "bg-primary text-reversed shadow-sm"
-                    : "text-slate-500 hover:bg-background hover:text-text",
+                    : "text-muted hover:bg-background hover:text-text",
                   isCollapsed ? "lg:justify-center" : "justify-start"
                 )}
               >
@@ -143,7 +145,7 @@ const Sidebar: React.FC = ({
                 "w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-right",
                 isActive(settingsItem.href)
                   ? "bg-primary text-reversed"
-                  : "text-slate-500 hover:bg-background hover:text-text",
+                  : "text-muted hover:bg-background hover:text-text",
                 isCollapsed ? "lg:justify-center" : "justify-start"
               )}
             >
@@ -161,11 +163,11 @@ const Sidebar: React.FC = ({
             )}
           >
             <div className="w-8 h-8 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center shrink-0 text-reversed text-xs font-bold">
-              م
+              {user.name[0]}
             </div>
             <div className={cn("flex-1 min-w-0 text-right block", isCollapsed && "lg:hidden")}>
-              <p className="text-sm font-medium text-text truncate leading-tight">محمد العمري</p>
-              <p className="text-[11px] text-slate-400 truncate">مدير النظام</p>
+              <p className="text-sm font-medium text-text truncate leading-tight">{user.name}</p>
+              <p className="text-[11px] text-muted truncate">مدير النظام</p>
             </div>
           </div>
 

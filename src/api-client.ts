@@ -2,7 +2,7 @@ import { setSessionItem } from "./lib/helpers";
 import { APIResponse, UpdateItemType, UpdateItemWithFormData } from "./libraries/react-query/types";
 import { AdminProductsQueryParams, ForgotPasswordProps, LoginProps, ResetForgottenPasswordProps } from "./types/forms";
 import { CachedUser, ID } from "./types/global";
-import { BrandEntity, CategoryEntity, ColorEntity, ColorEntityCreation, ProductEntity, SizeEntity, SizeEntityCreation, User } from "./types/models";
+import { BrandEntity, CategoryEntity, ColorEntity, ColorEntityCreation, ProductEntity, ProductVariantEntity, ProductVariantEntityCreation, SizeEntity, SizeEntityCreation, User } from "./types/models";
 
 export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 const API_URL = `${BASE_URL}/${process.env.NEXT_PUBLIC_API_VERSION}`
@@ -398,3 +398,51 @@ export const deleteProductByIdSettings = async (id: ID): Promise<APIResponse<Pro
   if (!response.ok) throw new Error(responseBody.message || "Failed to delete product");
   return responseBody;
 };
+
+export async function getAllProductVariantsSettings(productId: string): Promise<APIResponse<ProductVariantEntity[]>> {
+  const response = await fetch(`${API_URL}/variants/product/${productId}`, {
+    credentials: "include",
+    method: "GET",
+  });
+
+  const responseBody = await response.json();
+  if (!response.ok) throw new Error(responseBody.message || "فشلت عملية جلب المتغيرات");
+  return responseBody;
+}
+
+export async function createProductVariantSettings(data: ProductVariantEntityCreation): Promise<APIResponse<ProductVariantEntity>> {
+  const response = await fetch(`${API_URL}/variants`, {
+    credentials: "include",
+    method: "POST",
+    headers: { "Content-Type": "application/json", },
+    body: JSON.stringify(data),
+  });
+
+  const responseBody = await response.json();
+  if (!response.ok) throw new Error(responseBody.message || "فشلت عملية إضافة المتغير");
+  return responseBody;
+}
+
+export async function updateProductVariantQuantitySettings({ id, data, }: UpdateItemType<number>): Promise<APIResponse<ProductVariantEntity>> {
+  const response = await fetch(`${API_URL}/variants/${id}/quantity`, {
+    credentials: "include",
+    method: "PUT",
+    headers: { "Content-Type": "application/json", },
+    body: JSON.stringify({ quantity: data }),
+  });
+
+  const responseBody = await response.json();
+  if (!response.ok) throw new Error(responseBody.message || "فشلت عملية تحديث المتغير");
+  return responseBody;
+}
+
+export async function deleteProductVariantByIdSettings(id: string): Promise<APIResponse<ProductVariantEntity>> {
+  const response = await fetch(`${API_URL}/variants/${id}`, {
+    credentials: "include",
+    method: "DELETE",
+  });
+
+  const responseBody = await response.json();
+  if (!response.ok) throw new Error(responseBody.message || "فشلت عملية حذف المتغير");
+  return responseBody;
+}

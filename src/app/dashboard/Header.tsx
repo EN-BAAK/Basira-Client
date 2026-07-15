@@ -29,7 +29,7 @@ export const Header: React.FC = () => {
           <h1 className="text-base font-ibm-plex-arabic font-semibold text-text leading-tight">
             {title}
           </h1>
-          {subtitle && <p className="sm:block hidden text-[11px] text-slate-400 mt-0.5">{subtitle}</p>}
+          {subtitle && <p className="sm:block hidden text-[11px] text-muted mt-0.5">{subtitle}</p>}
         </div>
       </div>
 
