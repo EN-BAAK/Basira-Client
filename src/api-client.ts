@@ -1,8 +1,8 @@
 import { setSessionItem } from "./lib/helpers";
 import { APIResponse, UpdateItemType, UpdateItemWithFormData } from "./libraries/react-query/types";
-import { AdminProductsQueryParams, ForgotPasswordProps, LoginProps, ResetForgottenPasswordProps } from "./types/forms";
+import { AdminProductsQueryParams, CreatedMessageMutationResponse, ForgotPasswordProps, LoginProps, ResetForgottenPasswordProps } from "./types/forms";
 import { CachedUser, ID } from "./types/global";
-import { BrandEntity, CategoryEntity, ColorEntity, ColorEntityCreation, ProductEntity, ProductVariantEntity, ProductVariantEntityCreation, SizeEntity, SizeEntityCreation, User } from "./types/models";
+import { BrandEntity, CategoryEntity, ChatRoomEntity, ChatRoomEntityCreation, ColorEntity, ColorEntityCreation, MessageEntity, MessageEntityCreation, ProductEntity, ProductVariantEntity, ProductVariantEntityCreation, SizeEntity, SizeEntityCreation, User } from "./types/models";
 
 export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL
 const API_URL = `${BASE_URL}/${process.env.NEXT_PUBLIC_API_VERSION}`
@@ -399,7 +399,7 @@ export const deleteProductByIdSettings = async (id: ID): Promise<APIResponse<Pro
   return responseBody;
 };
 
-export async function getAllProductVariantsSettings(productId: string): Promise<APIResponse<ProductVariantEntity[]>> {
+export async function getAllProductVariantsSettings(productId: ID): Promise<APIResponse<ProductVariantEntity[]>> {
   const response = await fetch(`${API_URL}/variants/product/${productId}`, {
     credentials: "include",
     method: "GET",
@@ -444,5 +444,78 @@ export async function deleteProductVariantByIdSettings(id: string): Promise<APIR
 
   const responseBody = await response.json();
   if (!response.ok) throw new Error(responseBody.message || "فشلت عملية حذف المتغير");
+  return responseBody;
+}
+
+export async function getAllChatRooms(): Promise<APIResponse<ChatRoomEntity[]>> {
+  const response = await fetch(`${API_URL}/rooms`, {
+    credentials: "include",
+    method: "GET",
+  });
+
+  const responseBody = await response.json();
+  if (!response.ok) throw new Error(responseBody.message || "فشلت عملية جلب غرف الدردشة");
+  return responseBody;
+}
+
+export async function createChatRoom(data: ChatRoomEntityCreation): Promise<APIResponse<ChatRoomEntity>> {
+  const response = await fetch(`${API_URL}/rooms`, {
+    credentials: "include",
+    method: "POST",
+    headers: { "Content-Type": "application/json", },
+    body: JSON.stringify(data),
+  });
+
+  const responseBody = await response.json();
+  if (!response.ok) throw new Error(responseBody.message || "فشلت عملية إضافة الغرفة");
+  return responseBody;
+}
+
+export async function updateChatRoom({ id, data, }: UpdateItemType<string>): Promise<APIResponse<ChatRoomEntity>> {
+  const response = await fetch(`${API_URL}/rooms/${id}`, {
+    credentials: "include",
+    method: "PUT",
+    headers: { "Content-Type": "application/json", },
+    body: JSON.stringify({ title: data }),
+  });
+
+  const responseBody = await response.json();
+  if (!response.ok) throw new Error(responseBody.message || "فشلت عملية تحديث الغرفة");
+  return responseBody;
+}
+
+export async function deleteChatRoom(id: ID): Promise<APIResponse<ChatRoomEntity>> {
+  const response = await fetch(`${API_URL}/rooms/${id}`, {
+    credentials: "include",
+    method: "DELETE",
+  });
+
+  const responseBody = await response.json();
+  if (!response.ok) throw new Error(responseBody.message || "فشلت عملية حذف الغرفة");
+  return responseBody;
+}
+
+export async function getMessagesByRoomId(chatRoomId: ID): Promise<APIResponse<MessageEntity[]>> {
+  const response = await fetch(`${API_URL}/messages/room/${chatRoomId}`, {
+    credentials: "include",
+    method: "GET",
+  });
+
+  const responseBody = await response.json();
+  if (!response.ok) throw new Error(responseBody.message || "فشلت عملية جلب الرسائل");
+  return responseBody;
+}
+
+export async function createMessage(data: MessageEntityCreation): Promise<APIResponse<CreatedMessageMutationResponse>> {
+  const { chatRoomId, ...body } = data;
+  const response = await fetch(`${API_URL}/messages/room/${chatRoomId}`, {
+    credentials: "include",
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+
+  const responseBody = await response.json();
+  if (!response.ok) throw new Error(responseBody.message || "فشلت عملية إرسال الرسالة");
   return responseBody;
 }

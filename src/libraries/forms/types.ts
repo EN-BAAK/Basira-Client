@@ -93,6 +93,7 @@ export interface IconSelectionFieldProps {
 
 export interface TextAreaFieldProps extends BaseFieldProps {
   placeholder?: string;
+  rows?: number
 }
 
 export interface SelectorFieldProps extends BaseFieldProps {
@@ -126,7 +127,7 @@ export interface CustomButtonProps {
   label?: string
   className?: string
   variant?: Variant
-  onClick?: () => void
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   icon?: LucideIcon
   iconClassName?: string,
   disabled?: boolean,

@@ -23,40 +23,39 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({
   if (isSubmitting) buttonLabel = submittingLabel
   else if (disabled) buttonLabel = disabledLabel
 
-const variantClasses: Record<Variant, string> = {
-    primary: "bg-primary text-white hover:opacity-90",
-    
+  const variantClasses: Record<Variant, string> = {
+    primary: "bg-primary text-reversed hover:opacity-90",
+
     "primary-outline":
       "border border-primary bg-transparent text-primary hover:bg-primary/10",
 
     accent: "bg-accent text-text hover:opacity-90",
-    
+
     "accent-outline":
       "border border-accent bg-transparent text-accent hover:bg-accent/10",
 
-    success: "bg-success text-white hover:opacity-90",
-    
+    success: "bg-success text-reversed hover:opacity-90",
+
     "success-outline":
       "border border-success bg-transparent text-success hover:bg-success/10",
 
-    danger: "bg-danger text-white hover:opacity-90",
-    
+    danger: "bg-danger text-reversed hover:opacity-90",
+
     "danger-outline":
       "border border-danger bg-transparent text-danger hover:bg-danger/10",
 
-    warning: "bg-warning text-white hover:opacity-90",
-    
+    warning: "bg-warning text-reversed hover:opacity-90",
+
     "warning-outline":
       "border border-warning bg-transparent text-warning hover:bg-warning/10",
 
-    info: "bg-info text-white hover:opacity-90",
-    
+    info: "bg-info text-reversed hover:opacity-90",
+
     "info-outline":
       "border border-info bg-transparent text-info hover:bg-info/10",
 
-    // المتغيرات الشفافة والجديدة
     transparent: "bg-transparent text-text hover:opacity-75",
-    
+
     "transparent-outline":
       "border border-border bg-transparent text-text hover:bg-border/40",
 
@@ -91,7 +90,7 @@ const variantClasses: Record<Variant, string> = {
       )}
     >
       {Icon && <Icon className={cn("w-5 h-5", iconStyle)} />}
-      <span>{buttonLabel}</span>
+      {buttonLabel && <span>{buttonLabel}</span>}
     </button>
   )
 }

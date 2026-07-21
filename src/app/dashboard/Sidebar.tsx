@@ -58,7 +58,6 @@ const Sidebar: React.FC = () => {
             className="lg:hidden absolute -left-6 w-fit top-35 z-20 p-1 rounded-xs"
             iconClassName="w-4 h-4"
           />
-
         )}
 
         <div

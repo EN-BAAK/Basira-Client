@@ -60,7 +60,6 @@ export const navItems: NavItem[] = [
   },
 ];
 
-
 export const initialUser: User = {
   id: "-1",
   email: "guest@gmail.com",

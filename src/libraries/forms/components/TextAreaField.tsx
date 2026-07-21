@@ -14,6 +14,9 @@ const TextAreaField: React.FC<TextAreaFieldProps> = ({
   innerDivStyle,
   Icon,
   iconStyle,
+  required,
+  disabled,
+  rows=4
 }) => {
   return (
     <div className={`${styles || ""}`}>
@@ -42,10 +45,12 @@ const TextAreaField: React.FC<TextAreaFieldProps> = ({
         <Field
           as="textarea"
           id={name}
+          disabled={disabled}
           name={name}
           placeholder={placeholder}
           dir={dir}
-          rows={4}
+          required={required}
+          rows={rows}
           className={cn(Icon && (dir === "rtl" ? "pr-10" : "pl-10"))}
         />
       </div>

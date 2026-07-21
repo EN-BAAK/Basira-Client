@@ -20,3 +20,8 @@ export interface SelectedItemState {
   id: ID;
   state: "old" | "new" | "remove";
 }
+
+export enum MessageRole {
+  USER = "user",
+  ASSISTANT = "assistant",
+}

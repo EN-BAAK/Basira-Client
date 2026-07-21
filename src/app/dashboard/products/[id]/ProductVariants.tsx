@@ -67,7 +67,7 @@ export const ProductVariants: React.FC<DashboardProductVariantsProps> = ({ produ
         <CustomButton
           label="إضافة متغير جديد"
           icon={Plus}
-          className="w-fit text-xs px-3 py-2 bg-primary text-white hover:bg-primary/90 rounded-xl font-medium shadow-2xs"
+          className="w-fit text-xs px-3 py-2 bg-primary text-reversed hover:bg-primary/90 rounded-xl font-medium shadow-2xs"
           iconClassName="w-3.5 h-3.5"
           onClick={openModal}
         />

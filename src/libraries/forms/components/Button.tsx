@@ -16,7 +16,7 @@ const Button: React.FC<CustomButtonProps> = ({
 }) => {
   const variantClasses = {
     primary:
-      "bg-primary text-white hover:opacity-90",
+      "bg-primary text-reversed hover:opacity-90",
 
     "primary-outline":
       "border border-primary bg-transparent text-primary hover:bg-primary/10",
@@ -28,25 +28,25 @@ const Button: React.FC<CustomButtonProps> = ({
       "border border-accent bg-transparent text-accent hover:bg-accent/10",
 
     danger:
-      "bg-danger text-white hover:opacity-90",
+      "bg-danger text-reversed hover:opacity-90",
 
     "danger-outline":
       "border border-danger bg-transparent text-danger hover:bg-danger/10",
 
     success:
-      "bg-success text-white hover:opacity-90",
+      "bg-success text-reversed hover:opacity-90",
 
     "success-outline":
       "border border-success bg-transparent text-success hover:bg-success/10",
 
     warning:
-      "bg-warning text-white hover:opacity-90",
+      "bg-warning text-reversed hover:opacity-90",
 
     "warning-outline":
       "border border-warning bg-transparent text-warning hover:bg-warning/10",
 
     info:
-      "bg-info text-white hover:opacity-90",
+      "bg-info text-reversed hover:opacity-90",
 
     "info-outline":
       "border border-info bg-transparent text-info hover:bg-info/10",
@@ -80,7 +80,7 @@ const Button: React.FC<CustomButtonProps> = ({
     <button
       disabled={disabled}
       type={type}
-      onClick={onClick}
+      onClick={(e) => onClick?.(e)}
       className={cn(
         "w-full px-3 py-2 flex items-center justify-center gap-2 rounded-xl transition-colors duration-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed",
         variantClasses,

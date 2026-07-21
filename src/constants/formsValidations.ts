@@ -112,3 +112,18 @@ export const variantValidationSchema =
       .min(0, "الكمية المتوفرة لا يمكن أن تكون أقل من 0")
       .required("يرجى إدخال الكمية المتوفرة بالمستودع"),
   });
+
+export const messageValidationSchema =
+  Yup.object().shape({
+    content: Yup.string()
+      .max(200, "الرسالة طويلة جداً")
+      .required("يرجى كتابة رسالة"),
+  });
+
+export const chatRoomTitleValidationSchema =
+  Yup.object().shape({
+    title: Yup.string()
+      .min(3, "العنوان يجب ان يكون اكثر من 3 احرف")
+      .max(20, "العنوان طويل جداً")
+      .required("يرجى كتابة العنوان"),
+  });

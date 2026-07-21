@@ -62,3 +62,16 @@ export const formatBalance = (value: number): string => {
 export const getImageUrl = (imgUrl: string): string => {
   return `${BASE_URL}/${imgUrl}`
 }
+
+export const formatDate = (date: Date | string) => {
+  const dateObj = typeof date === "string" ? new Date(date) : date;
+
+  return dateObj.toLocaleString("ar-SA", {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true
+  });
+};

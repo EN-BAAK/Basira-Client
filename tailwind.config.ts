@@ -16,18 +16,19 @@ const config: Config = {
       },
 
       colors: {
-        primary: "#2563EB",
-        accent: "#06B6D4",
+        primary: "#1E3A5F",
+        accent: "#C89B3C",
 
         background: "#F8FAFC",
-        background2: "#EEF2F7",
+        background2: "#EEF3F8",
 
         card: "#FFFFFF",
-        reversed: "#FFFFFF",
+        reversed: "#0F172A",
 
         text: "#0F172A",
+        "muted-foreground": "#64748B",
 
-        border: "#E2E8F0",
+        border: "#D8E1EB",
 
         success: "#16A34A",
         danger: "#DC2626",

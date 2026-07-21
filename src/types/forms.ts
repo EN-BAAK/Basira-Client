@@ -1,5 +1,5 @@
 import { ID } from "./global"
-import { ProductVariantEntity } from "./models"
+import { ChatRoomEntity, MessageEntity, ProductVariantEntity } from "./models"
 
 export type LoginProps = {
   email: string,
@@ -44,4 +44,10 @@ export interface VariantSelectorFieldProps {
   sizes: VariantOption[];
   styles?: string;
   labelStyle?: string;
+}
+
+export type CreatedMessageMutationResponse = {
+  messages: [MessageEntity, MessageEntity],
+  roomId: ID,
+  createdRoom?: ChatRoomEntity
 }

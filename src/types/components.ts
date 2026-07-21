@@ -1,5 +1,5 @@
 import { CommonParentProps, ID } from "./global"
-import { BrandEntity, CategoryEntity, ColorEntity, ProductEntity, ProductVariantEntity, SizeEntity } from "./models"
+import { BrandEntity, CategoryEntity, ChatRoomEntity, ColorEntity, MessageEntity, ProductEntity, ProductVariantEntity, SizeEntity } from "./models"
 
 export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: "text" | "rectangular" | "circular" | "pattern"
@@ -105,4 +105,29 @@ export interface DashboardVariantModalProps {
   sizes: SizeEntity[]
   productId: ID;
   variants: ProductVariantEntity[]
+}
+
+export interface DashboardProfSidebarProps {
+  activeChat: ID;
+  setActiveChat: (id: ID) => void;
+  onNewChat: () => void;
+  isOpenMobile: boolean;
+  closeMobileSidebar: () => void;
+  openMobileSidebar: () => void
+}
+
+export interface DashboardMessageProps {
+  message: MessageEntity
+}
+
+export type DashboardChatRoomProps = {
+  chatRoomId: ID,
+  setChatRoom: (roomId: ID) => void
+}
+
+export type DashboardEditChatRoomProps = {
+  chatRoom: ChatRoomEntity;
+  onSave: (newTitle: string, chatId: ID) => Promise<void>;
+  onCancel: () => void;
+  isPending?: boolean;
 }

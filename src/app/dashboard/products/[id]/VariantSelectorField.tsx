@@ -88,7 +88,7 @@ const VariantSelectorField: React.FC<VariantSelectorFieldProps> = ({
                   className={cn(
                     "px-4 py-2 rounded-lg border text-sm font-medium transition-colors duration-200 cursor-pointer",
                     isSelected
-                      ? "bg-primary border-primary text-white"
+                      ? "bg-primary border-primary text-reversed"
                       : "bg-card border-border text-text hover:bg-border/40"
                   )}
                 >

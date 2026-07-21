@@ -1,4 +1,4 @@
-import { ID, SelectedItemState } from "./global";
+import { ID, MessageRole, SelectedItemState } from "./global";
 
 export interface ColorEntity {
   id: ID;
@@ -71,4 +71,23 @@ export type ProductVariantEntity = {
 export type ProductVariantEntityCreation = Omit<ProductVariantEntity, "id" | "color" | "size"> & {
   colorId?: ID,
   sizeId?: ID
+}
+
+export type ChatRoomEntity = {
+  id: ID,
+  title: string,
+  createdAt: Date
+}
+
+export type ChatRoomEntityCreation = Omit<ChatRoomEntity, "id">
+
+export type MessageEntity = {
+  id: ID,
+  role: MessageRole,
+  content: string,
+  createdAt: Date
+}
+
+export type MessageEntityCreation = Omit<MessageEntity, "id" | "createdAt"> & {
+  chatRoomId: ID
 }
