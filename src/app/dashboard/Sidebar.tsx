@@ -124,6 +124,7 @@ const Sidebar: React.FC = () => {
                 {item.badge && (
                   <span className={cn(
                     "mr-auto px-1.5 py-0.5 bg-accent/15 text-accent text-[10px] font-bold rounded-full block",
+                    active && "bg-reversed/15 text-reversed",
                     isCollapsed && "lg:hidden"
                   )}>
                     {item.badge}

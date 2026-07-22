@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { ChartArea, Plus, X, Pencil, Trash2 } from "lucide-react";
+import { Plus, X, Pencil, Trash2, Bot } from "lucide-react";
 import { DashboardProfSidebarProps } from "@/types/components";
 import Button from "@/libraries/forms/components/Button";
 import { ID } from "@/types/global";
@@ -81,7 +81,7 @@ const Sidebar: React.FC<DashboardProfSidebarProps> = ({
       >
         {!isOpenMobile && (
           <Button
-            icon={ChartArea}
+            icon={Bot}
             onClick={openMobileSidebar}
             variant="primary"
             className="md:hidden absolute -left-6 w-fit top-45 z-20 p-1 rounded-xs"

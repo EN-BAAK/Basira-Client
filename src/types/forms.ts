@@ -47,7 +47,12 @@ export interface VariantSelectorFieldProps {
 }
 
 export type CreatedMessageMutationResponse = {
-  messages: [MessageEntity, MessageEntity],
+  message: MessageEntity,
   roomId: ID,
   createdRoom?: ChatRoomEntity
+}
+
+export type ReceiveAIResponseMutationResponse = {
+  message: MessageEntity,
+  roomId: ID,
 }

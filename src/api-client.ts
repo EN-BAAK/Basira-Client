@@ -519,3 +519,17 @@ export async function createMessage(data: MessageEntityCreation): Promise<APIRes
   if (!response.ok) throw new Error(responseBody.message || "فشلت عملية إرسال الرسالة");
   return responseBody;
 }
+
+export async function receiveAIResponse(data: UpdateItemType<string>): Promise<APIResponse<CreatedMessageMutationResponse>> {
+  const { id, ...body } = data;
+  const response = await fetch(`${API_URL}/messages/room/${id}/receive`, {
+    credentials: "include",
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ content: body.data }),
+  });
+
+  const responseBody = await response.json();
+  if (!response.ok) throw new Error(responseBody.message || "فشلت عملية استلام الرسالة");
+  return responseBody;
+}

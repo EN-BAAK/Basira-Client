@@ -117,7 +117,8 @@ export interface DashboardProfSidebarProps {
 }
 
 export interface DashboardMessageProps {
-  message: MessageEntity
+  message: MessageEntity,
+  username: string
 }
 
 export type DashboardChatRoomProps = {

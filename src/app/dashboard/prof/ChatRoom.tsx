@@ -1,21 +1,25 @@
 import { messageValidationSchema } from '@/constants/formsValidations'
 import { initialMessageCreationValues } from '@/constants/formsValues'
-import { useCreateMessage, useGetMessagesByRoomId } from '@/features/useMessages'
+import { useCreateMessage, useGetMessagesByRoomId, useReceiveAiResponse } from '@/features/useMessages'
 import { DashboardChatRoomProps } from '@/types/components'
 import { MessageEntityCreation } from '@/types/models'
 import { Form, Formik, FormikHelpers } from 'formik'
 import { Bot, Send } from 'lucide-react'
 import React, { useEffect, useRef } from 'react'
 import Message from './Message'
-import TextAreaField from '@/libraries/forms/components/TextAreaField'
 import SubmitButton from '@/libraries/forms/components/SubmitButton'
+import InputField from '@/libraries/forms/components/InputField'
+import { useAppContext } from '@/libraries/project-provider/AppProvider'
 
 const ChatRoom: React.FC<DashboardChatRoomProps> = ({ chatRoomId = "-1", setChatRoom }) => {
-  const { mutateAsync, isPending: isTyping } = useCreateMessage(chatRoomId, setChatRoom)
+  const { user: { name } } = useAppContext()
+
+  const { mutateAsync: sendMessageAsync, isPending: isSending, isSuccess: isSendingSucceed } = useCreateMessage(chatRoomId, setChatRoom)
+  const { mutateAsync: receiveMessageAsync, isPending: isReposing } = useReceiveAiResponse(chatRoomId)
   const { data, isFetching } = useGetMessagesByRoomId(chatRoomId)
 
   const messages = data?.data || []
-  const isLoading = isTyping || isFetching
+  const isLoading = isSending || isFetching
 
   const bottomRef = useRef<HTMLDivElement>(null);
 
@@ -23,13 +27,18 @@ const ChatRoom: React.FC<DashboardChatRoomProps> = ({ chatRoomId = "-1", setChat
     values: MessageEntityCreation,
     helpers: FormikHelpers<MessageEntityCreation>
   ) => {
-    await mutateAsync({ ...values, chatRoomId });
+    await sendMessageAsync({ ...values, chatRoomId });
     helpers.resetForm();
+    console.log(isSendingSucceed)
+    if (isSendingSucceed)
+      await receiveMessageAsync({ id: chatRoomId, data: values.content });
   };
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, isTyping]);
+    bottomRef.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+  }, [messages, isSending, isReposing]);
 
   return (
     <React.Fragment>
@@ -48,27 +57,30 @@ const ChatRoom: React.FC<DashboardChatRoomProps> = ({ chatRoomId = "-1", setChat
       ) : (
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
           {messages.map((m) => (
-            <Message key={m.id} message={m} />
+            <div
+              key={m.id}
+              className="animate-in fade-in slide-in-from-bottom-2 duration-300"
+            >
+              <Message username={name} message={m} />
+            </div>
           ))}
 
-          {isTyping && (
-            <div className="flex items-start gap-3">
+          {isReposing && (
+            <div className="flex items-start gap-3 animate-in fade-in duration-300">
               <div className="w-8 h-8 rounded-full bg-card border border-border flex items-center justify-center text-primary shrink-0">
                 <Bot className="w-4 h-4" />
               </div>
-              <div className="px-4 py-3 bg-card border border-border rounded-2xl rounded-tl-none">
-                <div className="flex gap-1.5 items-center">
-                  {[0, 150, 300].map((d) => (
-                    <span
-                      key={d}
-                      className="w-2 h-2 bg-muted-foreground/60 rounded-full animate-bounce"
-                      style={{ animationDelay: `${d}ms` }}
-                    />
-                  ))}
+
+              <div className="px-4 py-3 bg-card border border-border rounded-2xl rounded-tr-none">
+                <div className="flex items-center gap-1">
+                  <span className="w-2 h-2 rounded-full bg-primary animate-pulse [animation-delay:-0.3s]" />
+                  <span className="w-2 h-2 rounded-full bg-primary animate-pulse [animation-delay:-0.15s]" />
+                  <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
                 </div>
               </div>
             </div>
           )}
+
           <div ref={bottomRef} />
         </div>
       )}
@@ -81,11 +93,11 @@ const ChatRoom: React.FC<DashboardChatRoomProps> = ({ chatRoomId = "-1", setChat
         >
           {({ dirty, isSubmitting, isValid }) => (
             <Form className="flex items-center gap-2 max-w-3xl mx-auto">
-              <TextAreaField
+              <InputField
+                type='text'
                 name='content'
                 placeholder="اسأل عن فاتورة أو عن المبيعات..."
                 disabled={isLoading}
-                rows={1}
                 styles='flex-1 h-[50px]'
               />
 

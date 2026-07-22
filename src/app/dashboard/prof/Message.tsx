@@ -5,7 +5,7 @@ import { Bot } from "lucide-react";
 import { DashboardMessageProps } from "@/types/components";
 import { formatDate } from "@/lib/helpers";
 
-const Message: React.FC<DashboardMessageProps> = ({ message }) => {
+const Message: React.FC<DashboardMessageProps> = ({ message, username }) => {
   const isUser = message.role === "user";
 
   function renderMd(text: string) {
@@ -29,14 +29,14 @@ const Message: React.FC<DashboardMessageProps> = ({ message }) => {
           : "bg-card border border-border text-primary"
           }`}
       >
-        {isUser ? "م" : <Bot className="w-4 h-4" />}
+        {isUser ? username[0] : <Bot className="w-4 h-4" />}
       </div>
 
       <div className={`max-w-[75%] flex flex-col gap-1 ${isUser ? "items-end" : "items-start"}`}>
         <div
           className={`px-4 py-3 rounded-2xl text-sm leading-relaxed ${isUser
-            ? "bg-primary text-reversed rounded-tr-none"
-            : "bg-card border border-border text-text rounded-tl-none"
+            ? "bg-primary text-reversed rounded-tl-none"
+            : "bg-card border border-border text-text rounded-tr-none"
             }`}
         >
           {message.content.split("\n").map((line, li) => (
@@ -45,7 +45,7 @@ const Message: React.FC<DashboardMessageProps> = ({ message }) => {
             </p>
           ))}
         </div>
-        <span className="text-[10px] text-muted-foreground px-1 font-sans">{formatDate(message.createdAt)}</span>
+        <span className="text-[8px] text-muted px-1 font-sans">{formatDate(message.createdAt)}</span>
       </div>
     </div>
   );
